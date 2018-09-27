@@ -50,11 +50,9 @@ And a flasher like **lm4flash**
 
 ## Usage
 
- - Clone this
-   [tm4c-linux-template](https://github.com/shawn-dsilva/tm4c-linux-template) repository 
+ - Clone this [tm4c-linux-template](https://github.com/shawn-dsilva/tm4c-linux-template repository 
   
-
-     git clone https://github.com/shawn-dsilva/tm4c-linux-template.git
+     `git clone https://github.com/shawn-dsilva/tm4c-linux-template.git`
 
  - Header files(.h) to be placed in `inc` folder,C source files(.c) to be placed in `src` folder
  - Set the `TARGET` variable in the Makefile to whatever you want the   
