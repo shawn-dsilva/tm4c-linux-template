@@ -5,7 +5,7 @@ TM4C Template for Linux
 
 ## About
 
-This is a simple template for writing,compiling and building code for the TM4C123GH6PM Launchpad development board by TI on a Linux(specifically Ubuntu) system.This repository includes a `Makefile`,a linker script `TM4C123GH6PM.ld` for the TM4C board,the `Startup.c` file and required headers for the TM4C microcontroller and a basic blinky `main.c` file
+This is a simple template for writing and building code for the TM4C123GH6PM Launchpad development board by TI on a Linux(specifically Ubuntu) system.This repository includes a `Makefile`,a linker script `TM4C123GH6PM.ld` for the TM4C board,the `Startup.c` file and required headers for the TM4C microcontroller and a basic blinky `main.c` file
 
 Directory structure after running `make`
 
@@ -50,7 +50,7 @@ And a flasher like **lm4flash**
 
 ## Usage
 
- - Clone this [tm4c-linux-template](https://github.com/shawn-dsilva/tm4c-linux-template repository 
+ - Clone this [tm4c-linux-template](https://github.com/shawn-dsilva/tm4c-linux-template) repository 
   
      `git clone https://github.com/shawn-dsilva/tm4c-linux-template.git`
 
