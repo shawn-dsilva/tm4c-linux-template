@@ -9,7 +9,7 @@ This is a simple template for writing and building code for the TM4C123GH6PM Lau
 
 Directory structure after running `make`
 
-`
+`shawn@ubuntuPC:~/projects/embedded/tm4c-linux-template$ tree
 .
 ├── bin
 │   ├── main.bin
@@ -28,9 +28,7 @@ Directory structure after running `make`
 ├── README.md
 └── src
     ├── main.c
-    └── startup_gcc.c
-    
- `
+    └── startup_gcc.c`
 
 Tested on Ubuntu 18.04 LTS
 
