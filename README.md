@@ -9,7 +9,8 @@ This is a simple template for writing and building code for the TM4C123GH6PM Lau
 
 Directory structure after running `make`
 
-`.
+`
+.
 ├── bin
 │   ├── main.bin
 │   └── main.elf
@@ -27,7 +28,9 @@ Directory structure after running `make`
 ├── README.md
 └── src
     ├── main.c
-    └── startup_gcc.c`
+    └── startup_gcc.c
+    
+ `
 
 Tested on Ubuntu 18.04 LTS
 
