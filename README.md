@@ -9,22 +9,25 @@ This is a simple template for writing and building code for the TM4C123GH6PM Lau
 
 Directory structure after running `make`
 
-    ├── inc
-    │   ├── hw_nvic.h
-    │   └── hw_types.h
-    ├── main.bin
-    ├── Makefile
-    ├── obj
-    │   ├── a.axf
-    │   ├── main.d
-    │   ├── main.o
-    │   ├── startup_gcc.d
-    │   └── startup_gcc.o
-    ├── README.md
-    ├── src
-    │   ├── main.c
-    │   └── startup_gcc.c
-    └── TM4C123GH6PM.ld
+`.
+├── bin
+│   ├── main.bin
+│   └── main.elf
+├── inc
+│   ├── hw_nvic.h
+│   └── hw_types.h
+├── ld
+│   └── TM4C123GH6PM.ld
+├── Makefile
+├── obj
+│   ├── main.d
+│   ├── main.o
+│   ├── startup_gcc.d
+│   └── startup_gcc.o
+├── README.md
+└── src
+    ├── main.c
+    └── startup_gcc.c`
 
 Tested on Ubuntu 18.04 LTS
 
@@ -53,13 +56,16 @@ And a flasher like **lm4flash**
  - Clone this [tm4c-linux-template](https://github.com/shawn-dsilva/tm4c-linux-template) repository 
   
      `git clone https://github.com/shawn-dsilva/tm4c-linux-template.git`
-
+     
+    
+ - Create a file called `61.dialout.rules` in `/etc/udev/rules.d` with this line inside it `SUBSYSTEM=="usb",      ATTRS{idVendor}=="1cbe", ATTRS{idProduct}=="00fd", MODE="0666"`
+ this is to allow any program to read or write to your TM4C Launchpad board,i.e you will not have to use `sudo` everytime
  - Header files(.h) to be placed in `inc` folder,C source files(.c) to be placed in `src` folder
  - Set the `TARGET` variable in the Makefile to whatever you want the   
    finished .bin to be named as.
  - Run `make`
- - The object files will be in an `obj` folder,and the .bin file will be  
-   in the main directory itself.
+ - The object files will be in an `obj` folder
+ - The main.bin file and the main.elf(with GNU GDB debugging symbols) will be in the `bin` folder
  - Run `sudo make flash` to flash the main.bin to TM4C board
  - Run `make clean` to delete all object and .bin files.
 
