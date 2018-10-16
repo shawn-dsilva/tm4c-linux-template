@@ -52,19 +52,22 @@ CC = arm-none-eabi-gcc #compiler
 LD = arm-none-eabi-ld #linker
 OBJCOPY = arm-none-eabi-objcopy #final executable builder
 FLASHER = lm4flash #flashing utility
-RM      = rm -f
+RM      = rm -rf
+MKDIR   = @mkdir -p $(@D) #creates folders if not present
 
 
 # Rules to build bin
 all: bin/$(TARGET).bin
 
 obj/%.o: src/%.c                 #turns .c source files into object files
+	$(MKDIR)              
 	$(CC) -o $@ $^ $(CPPFLAGS) $(CFLAGS)
 
-bin/$(TARGET).elf: $(OBJS)               #contains debug symbols for GNU GDB
+bin/$(TARGET).elf: $(OBJS)      ##contains debug symbols for GNU GDB
+	$(MKDIR)              
 	$(LD) -o $@ $^ $(LDFLAGS)
 
-bin/$(TARGET).bin: bin/$(TARGET).elf           #debug symbols for GNU GDB stripped by objcopy,finished binary ready for flashing
+bin/$(TARGET).bin: bin/$(TARGET).elf    #debug symbols for GNU GDB stripped by objcopy,finished binary ready for flashing
 	$(OBJCOPY) -O binary $< $@
 
 
@@ -74,7 +77,7 @@ flash:
 
 #remove object and bin files
 clean:
-	-$(RM) obj/*
-	-$(RM) bin/*
+	-$(RM) obj
+	-$(RM) bin
 
 .PHONY: all clean
