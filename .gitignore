@@ -1,5 +1,5 @@
 *.o
 *.d
 *.bin
-a.out
+*.elf
 
