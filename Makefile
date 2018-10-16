@@ -29,8 +29,8 @@ MCU = TM4C123GH6PM
 DEV = /dev/ttyACM0
 # SRC: all source files from src directory
 SRC = $(wildcard src/*.c)
-# OBJ: directory to put objects and all other intermediate files
-OBJ = obj
+# OBJS: list of object files
+OBJS = $(addprefix obj/,$(notdir $(SRC:.c=.o)))
 # LD_SCRIPT: linker script
 LD_SCRIPT = ld/$(MCU).ld
 
@@ -39,7 +39,7 @@ LD_SCRIPT = ld/$(MCU).ld
 CPPFLAGS += -Iinc #inc folder is where header files are
 
 #GCC FLAGS
-CFLAGS = -g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
+CFLAGS = -ggdb -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
 CFLAGS +=-Os -ffunction-sections -fdata-sections -MD -std=c99     #you can add  -Wall here if you wish,that prints annoying warnings to the screen
 CFLAGS += -pedantic -DPART_$(MCU) -c 
 CFLAGS += -DTARGET_IS_BLIZZARD_RA1
@@ -53,36 +53,28 @@ LD = arm-none-eabi-ld #linker
 OBJCOPY = arm-none-eabi-objcopy #final executable builder
 FLASHER = lm4flash #flashing utility
 RM      = rm -f
-MKDIR	= mkdir -p
 
-# list of object files
-OBJECTS = $(addprefix $(OBJ)/,$(notdir $(SRC:.c=.o)))
 
 # Rules to build bin
+all: bin/$(TARGET).bin
 
-all: $(TARGET).bin
-
-$(OBJ)/%.o: src/%.c | $(OBJ)
+obj/%.o: src/%.c                 #turns .c source files into object files
 	$(CC) -o $@ $^ $(CPPFLAGS) $(CFLAGS)
 
-$(OBJ)/$(TARGET).out: $(OBJECTS)
+bin/$(TARGET).elf: $(OBJS)               #contains debug symbols for GNU GDB
 	$(LD) -o $@ $^ $(LDFLAGS)
 
-$(TARGET).bin: $(OBJ)/$(TARGET).out
+bin/$(TARGET).bin: bin/$(TARGET).elf           #debug symbols for GNU GDB stripped by objcopy,finished binary ready for flashing
 	$(OBJCOPY) -O binary $< $@
-
-# create directory for object files if not already present
-$(OBJ):
-	$(MKDIR) $(OBJ)
 
 
 #Flashes bin to TM4C
 flash:
-	$(FLASHER) -S $(DEV) $(TARGET).bin 
+	$(FLASHER) -S $(DEV) bin/$(TARGET).bin
 
-#remove object files
+#remove object and bin files
 clean:
-	-$(RM) $(OBJ)/*
-	-$(RM) $(TARGET).bin
+	-$(RM) obj/*
+	-$(RM) bin/*
 
 .PHONY: all clean
