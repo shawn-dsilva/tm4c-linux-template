@@ -9,26 +9,29 @@ This is a simple template for writing and building code for the TM4C123GH6PM Lau
 
 Directory structure after running `make`
 
-`shawn@ubuntuPC:~/projects/embedded/tm4c-linux-template$ tree
-.
-├── bin
-│   ├── main.bin
-│   └── main.elf
-├── inc
-│   ├── hw_nvic.h
-│   └── hw_types.h
-├── ld
-│   └── TM4C123GH6PM.ld
-├── Makefile
-├── obj
-│   ├── main.d
-│   ├── main.o
-│   ├── startup_gcc.d
-│   └── startup_gcc.o
-├── README.md
-└── src
-    ├── main.c
-    └── startup_gcc.c`
+
+
+    .
+    ├── bin
+    │   ├── main.bin
+    │   └── main.elf
+    ├── inc
+    │   ├── hw_nvic.h
+    │   └── hw_types.h
+    ├── ld
+    │   └── TM4C123GH6PM.ld
+    ├── Makefile
+    ├── obj
+    │   ├── main.d
+    │   ├── main.o
+    │   ├── startup_gcc.d
+    │   └── startup_gcc.o
+    ├── README.md
+    └── src
+        ├── main.c
+        └── startup_gcc.c
+
+
 
 Tested on Ubuntu 18.04 LTS
 
