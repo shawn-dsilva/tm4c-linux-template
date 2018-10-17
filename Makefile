@@ -21,8 +21,8 @@
 # Description:	Makefile used to build files for this program
 
 
-# TARGET: name of the output file
-TARGET = main
+# PROJECT: name of the output file
+PROJECT = main
 # MCU: part number to build for
 MCU = TM4C123GH6PM
 #DEV : your TM4C123GH6PM when connected to your system,usually will be /dev/ttyACM0
@@ -57,23 +57,23 @@ MKDIR   = @mkdir -p $(@D) #creates folders if not present
 
 
 # Rules to build bin
-all: bin/$(TARGET).bin
+all: bin/$(PROJECT).bin
 
 obj/%.o: src/%.c                 #turns .c source files into object files
 	$(MKDIR)              
 	$(CC) -o $@ $^ $(CPPFLAGS) $(CFLAGS)
 
-bin/$(TARGET).elf: $(OBJS)      ##contains debug symbols for GNU GDB
+bin/$(PROJECT).elf: $(OBJS)      ##contains debug symbols for GNU GDB
 	$(MKDIR)              
 	$(LD) -o $@ $^ $(LDFLAGS)
 
-bin/$(TARGET).bin: bin/$(TARGET).elf    #debug symbols for GNU GDB stripped by objcopy,finished binary ready for flashing
+bin/$(PROJECT.bin: bin/$(PROJECT).elf    #debug symbols for GNU GDB stripped by objcopy,finished binary ready for flashing
 	$(OBJCOPY) -O binary $< $@
 
 
 #Flashes bin to TM4C
 flash:
-	$(FLASHER) -S $(DEV) bin/$(TARGET).bin
+	$(FLASHER) -S $(DEV) bin/$(PROJECT).bin
 
 #remove object and bin files
 clean:
