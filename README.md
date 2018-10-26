@@ -61,7 +61,7 @@ You will also need to get the **GCC ARM compiler/linker**
 
   
 
-`sudo apt install arm-none-eabi-gcc`
+```sudo apt install arm-none-eabi-gcc```
 
 And a flasher like **lm4flash**
 
@@ -83,7 +83,7 @@ sudo cp lm4flash /usr/bin/
 
 - Clone this [tm4c-linux-template](https://github.com/shawn-dsilva/tm4c-linux-template) repository
 
-`git clone https://github.com/shawn-dsilva/tm4c-linux-template.git`
+```git clone https://github.com/shawn-dsilva/tm4c-linux-template.git```
 
 - Create a file called `61.dialout.rules` in `/etc/udev/rules.d` with this line inside it `SUBSYSTEM=="usb", ATTRS{idVendor}=="1cbe", ATTRS{idProduct}=="00fd", MODE="0666"`
 this is to allow any program to read or write to your TM4C Launchpad board,i.e you will not have to use `sudo` everytime
@@ -123,7 +123,7 @@ sudo make install
 
 - Install **GNU GDB** 
 
-`sudo apt install gdb-multiarch`
+```sudo apt install gdb-multiarch```
 
 - Run this command to start OpenOCD with your board
 ```
