@@ -2,10 +2,7 @@
   
   
 
-TM4C Template for Linux
-
-==================
-
+# TM4C Template for Linux
 
 **UPDATE** : Added new `startup.c` and `startup.h` files for the TM4C,and a linker script all written from scratch by me,and Open Source,
 unlike the earlier TI BSD licensed `startup_gcc.c` file and associated linker script
