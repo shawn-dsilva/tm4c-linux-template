@@ -28,24 +28,26 @@ MCU = TM4C123GH6PM
 #DEV : your TM4C123GH6PM when connected to your system,usually will be /dev/ttyACM0
 DEV = /dev/ttyACM0
 # SRC: all source files from src directory
-SRC = $(wildcard src/*.c)
+SRC = $(wildcard src/*.c) \
+	  $(wildcard libs/*.c)
+OBJ = obj/
 # OBJS: list of object files
-OBJS = $(addprefix obj/,$(notdir $(SRC:.c=.o)))
+OBJS = $(addprefix $(OBJ),$(notdir $(SRC:.c=.o)))
 # LD_SCRIPT: linker script
 LD_SCRIPT = ld/$(MCU).ld
 
 
 #PREPROCESSOR FLAGS
-CPPFLAGS += -Iinc #inc folder is where header files are
+CPPFLAGS += -Iinc  #inc folder is where header files are
 
 #GCC FLAGS
 CFLAGS = -ggdb -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
 CFLAGS +=-Os -ffunction-sections -fdata-sections -MD -std=c99     #you can add  -Wall here if you wish,that prints annoying warnings to the screen
 CFLAGS += -pedantic -DPART_$(MCU) -c 
-CFLAGS += -DTARGET_IS_BLIZZARD_RA1
+CFLAGS += -DTARGET_IS_BLIZZARD_RA1 #code word for the TM4C
 
 #LINKER FLAGS
-LDFLAGS = -T $(LD_SCRIPT) --entry ResetISR --gc-sections
+LDFLAGS = -T $(LD_SCRIPT) --entry Reset_Handler --gc-sections
 
 #UTILITY VARIABLES
 CC = arm-none-eabi-gcc #compiler
@@ -57,17 +59,21 @@ MKDIR   = @mkdir -p $(@D) #creates folders if not present
 
 
 # Rules to build bin
-all: bin/$(PROJECT).bin
+all: $(OBJS) bin/$(PROJECT).bin
 
-obj/%.o: src/%.c                 #turns .c source files into object files
+$(OBJ)%.o: src/%.c                #turns .c source files into object files
 	$(MKDIR)              
 	$(CC) -o $@ $^ $(CPPFLAGS) $(CFLAGS)
 
+$(OBJ)%.o: libs/%.c                #turns .c source files into object files
+	$(MKDIR)              
+	$(CC) -o $@ $^ $(CPPFLAGS) $(CFLAGS)
+	
 bin/$(PROJECT).elf: $(OBJS)      ##contains debug symbols for GNU GDB
 	$(MKDIR)              
 	$(LD) -o $@ $^ $(LDFLAGS)
 
-bin/$(PROJECT.bin: bin/$(PROJECT).elf    #debug symbols for GNU GDB stripped by objcopy,finished binary ready for flashing
+bin/$(PROJECT).bin: bin/$(PROJECT).elf    #debug symbols for GNU GDB stripped by objcopy,finished binary ready for flashing
 	$(OBJCOPY) -O binary $< $@
 
 

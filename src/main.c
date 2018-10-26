@@ -46,7 +46,7 @@ void Delay(void){unsigned long volatile time;
 int main(void){  
   PortF_Init();
   while(1){
-    if(PF4 == 0x0){
+   if(PF4 == 0x0){
     Led = GPIO_PORTF_DATA_R;   // read value in PORTF DATA register
     Led = Led^0x02;            // reverse value of LED
     GPIO_PORTF_DATA_R = Led;   // write value to PORTF DATA register,toggle led 
