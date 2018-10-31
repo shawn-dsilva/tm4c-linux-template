@@ -18,8 +18,8 @@
 * File:			startup.c
 * Author:		Shawn D'silva <https://shawn-dsilva.github.io>.
 * Version:		1.0.0.
-* Description:	startup file for the TM4C Launchpad board,defines the vector table, 
-  and most importantly the Reset_Handler enabling the TM4C to execute the main program when the <RESET> 
+* Description:	startup file for the TM4C Launchpad board,defines the vector table,
+  and most importantly the Reset_Handler enabling the TM4C to execute the main program when the <RESET>
   button is pressed on board
 */
 #include <stdint.h>
