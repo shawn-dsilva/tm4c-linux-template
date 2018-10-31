@@ -19,3 +19,4 @@
 #define GPIO_PORTF_DR8R_R       (*((volatile unsigned long *)0x40025508))
 #define GPIO_LOCK_KEY           0x4C4F434B  // Unlocks the GPIO_CR register
 #define SYSCTL_RCGC2_R          (*((volatile unsigned long *)0x400FE108))
+void PortF_Init(void); // prototype call
