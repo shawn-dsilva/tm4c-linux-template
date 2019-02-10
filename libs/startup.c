@@ -22,7 +22,6 @@
   and most importantly the Reset_Handler enabling the TM4C to execute the main program when the <RESET>
   button is pressed on board
 */
-#include <stdint.h>
 #include "startup.h"
 
 // +-----------------------------------------------------------------------------------+
@@ -194,7 +193,7 @@ const vector_table_t vectors[] = {
 void Reset_Handler(void)
 {
 
-  uint32_t *src, *dest;
+  int *src, *dest;
 
   /* copying of the .data values into RAM */
 

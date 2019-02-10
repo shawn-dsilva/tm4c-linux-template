@@ -21,7 +21,6 @@
 * Description:	startup header for the TM4C Launchpad board,defines the vector table
     handlers and ISRS,also declares external variables
 */
-#include <stdint.h>
 
 // +-----------------------------------------------------------------------------------+
 // +			        Type Definitions and Macros                                    +
@@ -156,14 +155,14 @@ DEFAULT void PWM1Fault_ISR(void);
 extern int main(void);
 
 //stack pointer
-extern uint32_t _stack_ptr;
+extern int _stack_ptr;
 //.text/code,stored in Flash
-extern uint32_t _etext;
+extern int _etext;
 //.data,copied into RAM on boot
-extern uint32_t _data;
-extern uint32_t _edata;
+extern int _data;
+extern int _edata;
 //.bss,unitialized variables
-extern uint32_t _bss;
-extern uint32_t _ebss;
+extern int _bss;
+extern int _ebss;
 
 /***************************************** END OF FILE *******************************************/
