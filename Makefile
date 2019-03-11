@@ -23,8 +23,6 @@
 
 # PROJECT: name of the output file
 PROJECT = main
-# MCU: part number to build for
-MCU = TM4C123GH6PM
 #DEV : your TM4C123GH6PM when connected to your system,usually will be /dev/ttyACM0
 DEV = /dev/ttyACM0
 # SRCS: all source files from src directory
@@ -62,7 +60,7 @@ LDFLAGS = -T $(LD_SCRIPT) -e Reset_Handler
 # Rules to build bin
 all: bin/$(PROJECT).bin
 
-$(OBJ)%.o: src/%.c                #turns .c source files into object files
+$(OBJ)%.o: src/%.c               #turns .c source files into object files
 	$(MKDIR)              
 	$(CC) -o $@ $^ $(INC) $(CFLAGS)
 
