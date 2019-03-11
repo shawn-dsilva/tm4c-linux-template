@@ -44,6 +44,9 @@ int main(void){
     Led = 0x08;            // reverse value of LED
     GPIO_PORTF_DATA_R = Led;   // write value to PORTF DATA register,toggle led
     Delay();
+    /*Led = 0x0A;            // reverse value of LED
+    GPIO_PORTF_DATA_R = Led;   // write value to PORTF DATA register,toggle led
+    Delay();*/
    // }
   }
 }
