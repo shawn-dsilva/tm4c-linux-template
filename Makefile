@@ -27,27 +27,19 @@ PROJECT = main
 MCU = TM4C123GH6PM
 #DEV : your TM4C123GH6PM when connected to your system,usually will be /dev/ttyACM0
 DEV = /dev/ttyACM0
-# SRC: all source files from src directory
-SRC = $(wildcard src/*.c) \
+# SRCS: all source files from src directory
+SRCS = $(wildcard src/*.c) \
 	  $(wildcard libs/*.c)
 OBJ = obj/
 # OBJS: list of object files
-OBJS = $(addprefix $(OBJ),$(notdir $(SRC:.c=.o)))
+OBJS = $(addprefix $(OBJ),$(notdir $(SRCS:.c=.o)))
+
+#Flag points to the INC folder containing header files
+INC = -Iinc
+
 # LD_SCRIPT: linker script
 LD_SCRIPT = ld/$(MCU).ld
 
-
-#PREPROCESSOR FLAGS
-CPPFLAGS += -Iinc  #inc folder is where header files are
-
-#GCC FLAGS
-CFLAGS = -ggdb -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
-CFLAGS +=-Os -ffunction-sections -fdata-sections -MD -std=c99     #you can add  -Wall here if you wish,that prints annoying warnings to the screen
-CFLAGS += -pedantic -DPART_$(MCU) -c 
-CFLAGS += -DTARGET_IS_BLIZZARD_RA1 #code word for the TM4C
-
-#LINKER FLAGS
-LDFLAGS = -T $(LD_SCRIPT) --entry Reset_Handler --gc-sections
 
 #UTILITY VARIABLES
 CC = arm-none-eabi-gcc #compiler
@@ -58,16 +50,27 @@ RM      = rm -rf
 MKDIR   = @mkdir -p $(@D) #creates folders if not present
 
 
+#GCC FLAGS
+CFLAGS = -ggdb -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
+CFLAGS +=-Os -ffunction-sections -fdata-sections -MD -std=c99     #you can add  -Wall here if you wish,that prints annoying warnings to the screen
+CFLAGS += -pedantic -DPART_$(MCU) -c 
+CFLAGS += -DTARGET_IS_BLIZZARD_RA1 #code word for the TM4C
+
+#LINKER FLAGS
+LDFLAGS = -T $(LD_SCRIPT) --entry Reset_Handler --gc-sections
+
+
+
 # Rules to build bin
-all: $(OBJS) bin/$(PROJECT).bin
+all: bin/$(PROJECT).bin
 
 $(OBJ)%.o: src/%.c                #turns .c source files into object files
 	$(MKDIR)              
-	$(CC) -o $@ $^ $(CPPFLAGS) $(CFLAGS)
+	$(CC) -o $@ $^ $(INC) $(CFLAGS)
 
 $(OBJ)%.o: libs/%.c                #turns .c source files into object files
 	$(MKDIR)              
-	$(CC) -o $@ $^ $(CPPFLAGS) $(CFLAGS)
+	$(CC) -o $@ $^ $(INC) $(CFLAGS)
 	
 bin/$(PROJECT).elf: $(OBJS)      ##contains debug symbols for GNU GDB
 	$(MKDIR)              
