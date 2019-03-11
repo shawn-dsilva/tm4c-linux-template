@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2018, Shawn D'silva <shawn.dsilva_97@protonmail.com>
+# Copyright (c) 2018, Shawn D'silva <shawn@shawndsilva.com>
 # All rights reserved.
 #
 #  This file is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  # along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #
 # File:			Makefile
-# Author:		Shawn D'silva <https://shawn-dsilva.github.io>.
+# Author:		Shawn D'silva <https://www.shawndsilva.com>.
 # Version:		1.0.0.
 # Description:	Makefile used to build files for this program
 
