@@ -35,6 +35,8 @@ OBJS = $(addprefix $(OBJ),$(notdir $(SRCS:.c=.o)))
 #Flag points to the INC folder containing header files
 INC = -Iinc
 
+MCU = TM4C123GH6PM
+
 # LD_SCRIPT: linker script
 LD_SCRIPT = ld/$(MCU).ld
 
@@ -49,11 +51,11 @@ MKDIR   = @mkdir -p $(@D) #creates folders if not present
 
 
 #GCC FLAGS
-CFLAGS = -ggdb -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 
-CFLAGS += -mfloat-abi=softfp -Os -MD -std=c99 -c    
+CFLAGS = -ggdb -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16
+CFLAGS += -mfloat-abi=softfp -Os -MD -std=c99 -c
 
 #LINKER FLAGS
-LDFLAGS = -T $(LD_SCRIPT) -e Reset_Handler 
+LDFLAGS = -T $(LD_SCRIPT) -e Reset_Handler
 
 
 
@@ -61,15 +63,15 @@ LDFLAGS = -T $(LD_SCRIPT) -e Reset_Handler
 all: bin/$(PROJECT).bin
 
 $(OBJ)%.o: src/%.c               #turns .c source files into object files
-	$(MKDIR)              
+	$(MKDIR)
 	$(CC) -o $@ $^ $(INC) $(CFLAGS)
 
 $(OBJ)%.o: libs/%.c                #turns .c source files into object files
-	$(MKDIR)              
+	$(MKDIR)
 	$(CC) -o $@ $^ $(INC) $(CFLAGS)
-	
+
 bin/$(PROJECT).elf: $(OBJS)      ##contains debug symbols for GNU GDB
-	$(MKDIR)              
+	$(MKDIR)
 	$(LD) -o $@ $^ $(LDFLAGS)
 
 bin/$(PROJECT).bin: bin/$(PROJECT).elf    #debug symbols for GNU GDB stripped by objcopy,finished binary ready for flashing
