@@ -52,7 +52,7 @@ MKDIR   = @mkdir -p $(@D) #creates folders if not present
 
 #GCC FLAGS
 CFLAGS = -ggdb -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16
-CFLAGS += -mfloat-abi=softfp -Os -MD -std=c99 -c
+CFLAGS += -mfloat-abi=softfp -O1 -MD -std=c99 -c
 
 #LINKER FLAGS
 LDFLAGS = -T $(LD_SCRIPT) -e Reset_Handler
