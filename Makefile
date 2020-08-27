@@ -58,7 +58,6 @@ CFLAGS += -mfloat-abi=softfp -O1 -MD -std=c99 -c
 LDFLAGS = -T $(LD_SCRIPT) -e Reset_Handler
 
 
-
 # Rules to build bin
 all: bin/$(MAIN).bin
 
@@ -77,9 +76,8 @@ bin/$(MAIN).elf: $(OBJS)      ##contains debug symbols for GNU GDB
 bin/$(MAIN).bin: bin/$(MAIN).elf    #debug symbols for GNU GDB stripped by objcopy,finished binary ready for flashing
 	$(OBJCOPY) -O binary $< $@
 
-
 #Flashes bin to TM4C
-flash:
+flash: all
 	$(FLASHER) -S $(DEV) bin/$(MAIN).bin
 
 #remove object and bin files
@@ -87,4 +85,7 @@ clean:
 	-$(RM) obj
 	-$(RM) bin
 
-.PHONY: all clean
+re: clean all
+
+
+.PHONY: all clean re
