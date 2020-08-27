@@ -21,8 +21,8 @@
 # Description:	Makefile used to build files for this program
 
 
-# PROJECT: name of the output file
-PROJECT = main
+# MAIN: name of the output file
+MAIN = main
 #DEV : your TM4C123GH6PM when connected to your system,usually will be /dev/ttyACM0
 DEV = /dev/ttyACM0
 # SRCS: all source files from src directory
@@ -60,7 +60,7 @@ LDFLAGS = -T $(LD_SCRIPT) -e Reset_Handler
 
 
 # Rules to build bin
-all: bin/$(PROJECT).bin
+all: bin/$(MAIN).bin
 
 $(OBJ)%.o: src/%.c               #turns .c source files into object files
 	$(MKDIR)
@@ -70,17 +70,17 @@ $(OBJ)%.o: libs/%.c                #turns .c source files into object files
 	$(MKDIR)
 	$(CC) -o $@ $^ $(INC) $(CFLAGS)
 
-bin/$(PROJECT).elf: $(OBJS)      ##contains debug symbols for GNU GDB
+bin/$(MAIN).elf: $(OBJS)      ##contains debug symbols for GNU GDB
 	$(MKDIR)
 	$(LD) -o $@ $^ $(LDFLAGS)
 
-bin/$(PROJECT).bin: bin/$(PROJECT).elf    #debug symbols for GNU GDB stripped by objcopy,finished binary ready for flashing
+bin/$(MAIN).bin: bin/$(MAIN).elf    #debug symbols for GNU GDB stripped by objcopy,finished binary ready for flashing
 	$(OBJCOPY) -O binary $< $@
 
 
 #Flashes bin to TM4C
 flash:
-	$(FLASHER) -S $(DEV) bin/$(PROJECT).bin
+	$(FLASHER) -S $(DEV) bin/$(MAIN).bin
 
 #remove object and bin files
 clean:
