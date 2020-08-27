@@ -1,6 +1,5 @@
 ﻿# TM4C Template for Linux
-**UPDATE** : Added new `startup.c` and `startup.h` files for the TM4C,and a linker script all written from scratch by me,and Open Source,
-unlike the earlier TI BSD licensed `startup_gcc.c` file and associated linker script
+**UPDATE** : Added new `startup.c` and `startup.h` files for the TM4C, and a linker script all written from scratch by me, and Open Source, unlike the earlier TI BSD licensed `startup_gcc.c` file and associated linker script
 
 ## About
 This is a simple template for writing and building code for the TM4C123GH6PM Launchpad development board by TI on a Linux system. This repository includes a `Makefile`, a linker script `TM4C123GH6PM.ld` for the TM4C board, the `Startup.c` file and required headers for the TM4C microcontroller and a basic blinky `main.c` file.
@@ -12,13 +11,17 @@ Directory structure after running `make`
 │   ├── main.bin
 │   └── main.elf
 ├── inc
+│   ├── gpio.h
 │   └── startup.h
 ├── ld
 │   └── TM4C123GH6PM.ld
 ├── libs
+│   ├── gpio.c
 │   └── startup.c
 ├── Makefile
 ├── obj
+│   ├── gpio.d
+│   ├── gpio.o
 │   ├── main.d
 │   ├── main.o
 │   ├── startup.d
@@ -27,7 +30,7 @@ Directory structure after running `make`
 └── src
     └── main.c
 ```
-Tested on Ubuntu 18.04 LTS
+Tested on Ubuntu 18.04 LTS and Arch Linux with Linux kernel version 5.8.3-arch1-1.
 
 ## Toolchain setup and installation
 You need these dependencies before anything else
@@ -69,7 +72,7 @@ This is to allow any program to read or write to your TM4C Launchpad board, i.e 
 
 - Header files(`.h`) to be placed in `inc` folder
 - C source files( `.c`) to be placed in `src` folder
-- Library files for peripherals to go in the `libs` folder,these files are also C source files( `.c` )
+- Library files for peripherals to go in the `libs` folder, these files are also C source files( `.c` )
 
 - Set the `MAIN` variable in the Makefile to whatever you want the
 finished `.bin` to be named as.
@@ -85,7 +88,7 @@ finished `.bin` to be named as.
 - Run `make clean` to delete all object and `.bin` files.
 
 ## Debugging with OpenOCD and GDB
-- Download,Build and Install **OpenOCD**
+- Download, Build and Install **OpenOCD**
 ```
 git clone git://git.code.sf.net/p/openocd/code openocd.git
 cd openocd.git
@@ -136,7 +139,7 @@ you should see this UI
   >│49         if(PF4 == 0x0){                                                                          │
    │50          Led = GPIO_PORTF_DATA_R;   // read value in PORTF DATA register                         │
    │51          Led = Led^0x02;            // reverse value of LED                                      │
-   │52          GPIO_PORTF_DATA_R = Led;   // write value to PORTF DATA register,toggle led             │
+   │52          GPIO_PORTF_DATA_R = Led;   // write value to PORTF DATA register, toggle led            │
    │53          Delay();                                                                                │
    │54          }                                                                                       │
    │55        }                                                                                         │
