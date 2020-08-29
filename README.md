@@ -1,18 +1,8 @@
-﻿
-  
-  
-
-# TM4C Template for Linux
-
-**UPDATE** : Added new `startup.c` and `startup.h` files for the TM4C,and a linker script all written from scratch by me,and Open Source,
-unlike the earlier TI BSD licensed `startup_gcc.c` file and associated linker script
-  
+﻿# TM4C Template for Linux
+**UPDATE** : Added new `startup.c` and `startup.h` files for the TM4C, and a linker script all written from scratch by me, and Open Source, unlike the earlier TI BSD licensed `startup_gcc.c` file and associated linker script
 
 ## About
-
-This is a simple template for writing and building code for the TM4C123GH6PM Launchpad development board by TI on a Linux(specifically Ubuntu) system.This repository includes a `Makefile`,a linker script `TM4C123GH6PM.ld` for the TM4C board,the `Startup.c` file and required headers for the TM4C microcontroller and a basic blinky `main.c` file
-
-  
+This is a simple template for writing and building code for the TM4C123GH6PM Launchpad development board by TI on a Linux system. This repository includes a `Makefile`, a linker script `TM4C123GH6PM.ld` for the TM4C board, the `Startup.c` file and required headers for the TM4C microcontroller and a basic blinky `main.c` file.
 
 Directory structure after running `make`
 ```
@@ -21,13 +11,17 @@ Directory structure after running `make`
 │   ├── main.bin
 │   └── main.elf
 ├── inc
+│   ├── gpio.h
 │   └── startup.h
 ├── ld
 │   └── TM4C123GH6PM.ld
 ├── libs
+│   ├── gpio.c
 │   └── startup.c
 ├── Makefile
 ├── obj
+│   ├── gpio.d
+│   ├── gpio.o
 │   ├── main.d
 │   ├── main.o
 │   ├── startup.d
@@ -36,17 +30,12 @@ Directory structure after running `make`
 └── src
     └── main.c
 ```
-Tested on Ubuntu 18.04 LTS
-
-  
+Tested on Ubuntu 18.04 LTS and Arch Linux with Linux kernel version 5.8.3-arch1-1.
 
 ## Toolchain setup and installation
-
-  
-
 You need these dependencies before anything else
 
-  
+
 ```
 sudo apt install flex bison libgmp3-dev libmpfr-dev libncurses5-dev \
 
@@ -54,18 +43,14 @@ libmpc-dev autoconf texinfo build-essential libftdi-dev python-yaml \
 
 zlib1g-dev libusb-1.0-0-dev
 ```
-  
-  
 
 You will also need to get the **GCC ARM compiler/linker**
-
-  
 
 ```sudo apt install arm-none-eabi-gcc```
 
 And a flasher like **lm4flash**
 
-  
+
 ```
 git clone https://github.com/utzig/lm4tools.git
 
@@ -75,24 +60,21 @@ make
 
 sudo cp lm4flash /usr/bin/
 ```
-  
 
 ## Usage
-
-  
-
 - Clone this [tm4c-linux-template](https://github.com/shawn-dsilva/tm4c-linux-template) repository
 
 ```git clone https://github.com/shawn-dsilva/tm4c-linux-template.git```
 
 - Create a file called `61.dialout.rules` in `/etc/udev/rules.d` with this line inside it `SUBSYSTEM=="usb", ATTRS{idVendor}=="1cbe", ATTRS{idProduct}=="00fd", MODE="0666"`
-this is to allow any program to read or write to your TM4C Launchpad board,i.e you will not have to use `sudo` everytime
+
+This is to allow any program to read or write to your TM4C Launchpad board, i.e you will not have to use `sudo` everytime.
 
 - Header files(`.h`) to be placed in `inc` folder
 - C source files( `.c`) to be placed in `src` folder
-- Library files for peripherals to go in the `libs` folder,these files are also C source files( `.c` )
+- Library files for peripherals to go in the `libs` folder, these files are also C source files( `.c` )
 
-- Set the `TARGET` variable in the Makefile to whatever you want the
+- Set the `MAIN` variable in the Makefile to whatever you want the
 finished `.bin` to be named as.
 
 - Run `make`
@@ -105,29 +87,25 @@ finished `.bin` to be named as.
 
 - Run `make clean` to delete all object and `.bin` files.
 
-  
-  
-
 ## Debugging with OpenOCD and GDB
-
-- Download,Build and Install **OpenOCD**
+- Download, Build and Install **OpenOCD**
 ```
 git clone git://git.code.sf.net/p/openocd/code openocd.git
 cd openocd.git
 ./bootstrap
-./configure --prefix=/usr --enable-maintainer-mode --enable-stlink 
+./configure --prefix=/usr --enable-maintainer-mode --enable-stlink
 --enable-ti-icdi
 make
 sudo make install
  ```
 
-- Install **GNU GDB** 
+- Install **GNU GDB**
 
 ```sudo apt install gdb-multiarch```
 
 - Run this command to start OpenOCD with your board
 ```
-openocd -f /usr/share/openocd/scripts/board/ek-tm4c123gxl.cfg 
+openocd -f /usr/share/openocd/scripts/board/ek-tm4c123gxl.cfg
 ```
 
 You should see this output
@@ -136,7 +114,7 @@ Open On-Chip Debugger 0.10.0+dev-00554-g05e0d633 (2018-10-16-17:47)
 Licensed under GNU GPL v2
 For bug reports, read
 	http://openocd.org/doc/doxygen/bugs.html
-Info : The selected transport took over low-level target control. 
+Info : The selected transport took over low-level target control.
 The results might differ compared to plain JTAG/SWD
 adapter speed: 500 kHz
 Info : Listening on port 6666 for tcl connections
@@ -161,7 +139,7 @@ you should see this UI
   >│49         if(PF4 == 0x0){                                                                          │
    │50          Led = GPIO_PORTF_DATA_R;   // read value in PORTF DATA register                         │
    │51          Led = Led^0x02;            // reverse value of LED                                      │
-   │52          GPIO_PORTF_DATA_R = Led;   // write value to PORTF DATA register,toggle led             │
+   │52          GPIO_PORTF_DATA_R = Led;   // write value to PORTF DATA register, toggle led            │
    │53          Delay();                                                                                │
    │54          }                                                                                       │
    │55        }                                                                                         │
@@ -180,7 +158,7 @@ you should see this UI
    │68                                                                                                  │
    │69                                                                                                  │
    └────────────────────────────────────────────────────────────────────────────────────────────────────┘
-remote Remote target In: main                                                            L49   PC: 0x2da 
+remote Remote target In: main                                                            L49   PC: 0x2da
 Type "apropos word" to search for commands related to "word".
 (gdb) target remote localhost:3333
 Remote debugging using localhost:3333
@@ -193,7 +171,7 @@ Reading symbols from bin/main.elf...done.
 (gdb) target remote localhost:3333
 Remote debugging using localhost:3333
 0x000002da in main () at src/main.c:49
-(gdb) 
+(gdb)
 ```
 
 - Now you can run various commands like `layout regs` to get the register layouts or `disass` to disassemble the code for example
